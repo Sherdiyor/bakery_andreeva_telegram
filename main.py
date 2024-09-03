@@ -1,6 +1,8 @@
+import os
 from telegram import Bot, InlineKeyboardMarkup, InlineKeyboardButton
 from telegram.ext import Updater, CommandHandler, CallbackContext, CallbackQueryHandler
 from api_request import get_forms, delete_form
+from dotenv import load_dotenv
 
 import logging
 
@@ -9,9 +11,10 @@ logging.basicConfig(
     format='%(asctime)s - %(levelname)s - %(message)s',
     datefmt='%Y-%m-%d %H:%M:%S'
 )
+load_dotenv()
 
-BOT_TOKEN = '7476144216:AAEvl2_NHLcQp3CYt4S093FhK0Wr24KjVco'
-ADMIN_CHAT_ID = 564717931
+BOT_TOKEN = os.getenv('BOT_TOKEN')
+ADMIN_CHAT_ID = int(os.getenv('ADMIN_CHAT_ID'))
 
 bot = Bot(BOT_TOKEN)
 updater = Updater(BOT_TOKEN)

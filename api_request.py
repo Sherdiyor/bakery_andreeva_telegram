@@ -1,6 +1,11 @@
+import os
 import requests
+from dotenv import load_dotenv
 
-API_TOKEN = '74100620b888a8249a0321ab69eff55d247a28d1'
+
+load_dotenv()
+
+API_TOKEN = os.getenv('API_TOKEN')
 URL = 'http://127.0.0.1:8000/api/'
 
 
