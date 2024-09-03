@@ -19,7 +19,7 @@ def delete_form(id):
         'Content-Type': 'application/json',
         'Authorization': f'Token {API_TOKEN}'
     }
-    requests.delete(URL + f'form/{int(id)+1}/', headers=headers)
+    requests.delete(URL + f'form/{int(id)}/', headers=headers)
 
 
 # print(get_forms())

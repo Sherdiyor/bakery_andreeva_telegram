@@ -17,11 +17,13 @@ bot = Bot(BOT_TOKEN)
 updater = Updater(BOT_TOKEN)
 
 
-def orders(page):
-    forms = get_forms()
-    form = forms[page]
-    message = f'Новый заказ от клиента: {form["name"]}\n\nТелефон клиента: {form["phone"]}\nОписание заказа: {form["comment"]}'
-    return message
+def orders(page, forms):
+    for form in forms:
+        for key, value in form.items():
+            if key == 'id' and value == page:
+                message = f'Новый заказ от клиента: {form["name"]}\n\nТелефон клиента: {form["phone"]}\nОписание заказа: {form["comment"]}'
+                return message
+            continue
 
 
 def wake_up(update, context):
@@ -52,13 +54,15 @@ def callback_handler(update, context: CallbackContext):
     query = update.callback_query
     query.answer()
     if query.data == 'to_orders':
-        for i in range(len(get_forms())):
+        forms = get_forms()
+        for i in forms:
+            id = i.get('id')
             keyboard = [[InlineKeyboardButton(
-                'Выполнен', callback_data=f'complete_{i}')]]
+                'Выполнен', callback_data=f'complete_{id}')]]
             reply_markup = InlineKeyboardMarkup(keyboard)
             context.bot.send_message(
                 chat_id=query.message.chat_id,
-                text=orders(i),
+                text=orders(id, forms),
                 reply_markup=reply_markup
             )
     elif 'complete' in query.data:
